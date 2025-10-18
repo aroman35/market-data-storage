@@ -1,0 +1,28 @@
+# Custom queries for postgres_exporter (TimescaleDB examples)
+pg_tsdb_job_stats:
+  query: |
+    SELECT job_id, application_name, job_type, last_run_started_at, last_successful_finish,
+           last_run_status, total_runs, total_successes
+    FROM timescaledb_information.job_stats;
+  metrics:
+    - job_id:
+        usage: "LABEL"
+        description: "Job id"
+    - total_runs:
+        usage: "GAUGE"
+        description: "Total runs"
+    - total_successes:
+        usage: "GAUGE"
+        description: "Total successful runs"
+
+pg_tsdb_hypertable_sizes:
+  query: |
+    SELECT h.hypertable_name, s.total_bytes
+    FROM timescaledb_information.hypertable h
+    JOIN timescaledb_information.hypertable_size s USING (hypertable_name);
+  metrics:
+    - hypertable_name:
+        usage: "LABEL"
+    - total_bytes:
+        usage: "GAUGE"
+        description: "Total size of hypertable in bytes"
