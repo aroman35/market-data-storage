@@ -77,7 +77,7 @@ public class TardisClient(
         }
     }
 
-    private async Task<Stream> DownloadDatasetFileAsync(
+    public async Task<Stream> DownloadDatasetFileAsync(
         Exchange exchange,
         string datasetId,
         DateOnly date,
